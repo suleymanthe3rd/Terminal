@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowDown, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft,  faArrowRight, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 const KeyboardKey = styled.button`
@@ -28,7 +28,7 @@ const KeyboardKey = styled.button`
 const KeyboardRow = styled.div`
   display: flex;
   justify-content: center;
-
+  padding-right: 2rem;
   /* Add media query for mobile view */
   @media only screen and (max-width: 768px) {
     margin-left: 0;
@@ -36,11 +36,29 @@ const KeyboardRow = styled.div`
   }
 `;
 
+const ArrowKeyContainer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  
+
+`;
+
+const ArrowKeyRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function QwertyKeyboard() {
   return (
-    <div className="container">
+    <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="keyboard-container" >
-        <div className="keyboard">
+        <div className="keyboard" style={{ position: 'relative',maxWidth:"fit-content",minWidth:"fit-content" }}>
           <KeyboardRow>
             <KeyboardKey>ESC</KeyboardKey>
             <KeyboardKey>~</KeyboardKey>
@@ -88,7 +106,7 @@ function QwertyKeyboard() {
             <KeyboardKey>&apos;</KeyboardKey>
             <KeyboardKey>\</KeyboardKey>
           </KeyboardRow>
-          <KeyboardRow>
+          <KeyboardRow style={{paddingRight : "6rem"}}>
             <KeyboardKey >SHIFT</KeyboardKey>
             <KeyboardKey>&lt;</KeyboardKey>
             <KeyboardKey>Z</KeyboardKey>
@@ -109,11 +127,18 @@ function QwertyKeyboard() {
             <KeyboardKey style={{ width: '150px' }}>SPACE</KeyboardKey>
             <KeyboardKey>ALT GR</KeyboardKey>
             <KeyboardKey>CTRL</KeyboardKey>
-            <KeyboardKey><FontAwesomeIcon icon={faArrowLeft} /></KeyboardKey>
-            <KeyboardKey><FontAwesomeIcon icon={faArrowDown} /></KeyboardKey>
-            <KeyboardKey><FontAwesomeIcon icon={faArrowRight} /></KeyboardKey>
-            <KeyboardKey ><FontAwesomeIcon icon={faArrowUp} /></KeyboardKey>
           </KeyboardRow>
+
+          <ArrowKeyContainer>
+            <ArrowKeyRow>
+              <KeyboardKey><FontAwesomeIcon icon={faArrowUp} /></KeyboardKey>
+            </ArrowKeyRow>
+            <ArrowKeyRow>
+              <KeyboardKey><FontAwesomeIcon icon={faArrowLeft} /></KeyboardKey>
+              <KeyboardKey><FontAwesomeIcon icon={faArrowDown} /></KeyboardKey>
+              <KeyboardKey><FontAwesomeIcon icon={faArrowRight} /></KeyboardKey>
+            </ArrowKeyRow>
+          </ArrowKeyContainer>
         </div>
       </div>
     </div>
