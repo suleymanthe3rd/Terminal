@@ -9,6 +9,8 @@ const Container = styled.div`
   font-family: monospace;
   border-top: 1px solid #c6f7d3;
   border-bottom: 1px solid #c6f7d3;
+  width: 100%;
+
 `;
 
 const Table = styled.table`

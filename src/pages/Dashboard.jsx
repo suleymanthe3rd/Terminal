@@ -10,6 +10,8 @@ import SystemType from '../components/SystemType';
 import CpuStatus from '../components/CpuStatus';
 import TopProcess from '../components/TopProcess';
 import ClipboardAccess from '../components/ClipboardAccess';
+import MemoryStatus from '../components/MemoryStatus';
+import Earth from '../components/Earth';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -94,7 +96,7 @@ function Dashboard() {
             <SystemType />
             <ChartComponent topic='CPU USAGE' subTopic=''/>
             <CpuStatus/>
-            <TopProcess/>
+            <MemoryStatus/>
             <ClipboardAccess/>
           </StyledSubCol>
         </StyledCol2>
@@ -106,7 +108,8 @@ function Dashboard() {
         <StyledCol2 xs={12} md={4} lg={4}>
           <StyledSubCol xs={12}>
             <NetworkStatus/>
-            <ChartComponent />
+            <Earth/>
+            <TopProcess/>
             <ChartComponent />
           </StyledSubCol>
         </StyledCol2>
