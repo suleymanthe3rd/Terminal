@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const WatchContainer = styled.div`
   display: flex;
@@ -7,10 +8,10 @@ const WatchContainer = styled.div`
   justify-content: center;
   font-family: 'Courier New', Courier, monospace;
   font-size: 3em;
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold; /* Add this to make the text bold */
-  border-top: 1px solid #c6f7d3;
-  border-bottom: 1px solid #c6f7d3; /* Add this to add top and bottom borders */
+  border-top: 1px solid ${primary};
+  border-bottom: 1px solid ${primary}; /* Add this to add top and bottom borders */
   width: 100%;
 `;
 

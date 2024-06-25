@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const ClipboardAccessContainer = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const ClipboardAccessContainer = styled.div`
 `;
 
 const Topic = styled.span`
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -30,8 +31,8 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
   background-color: transparent;
-  border: 1px solid #c6f7d3;
-  color: #c6f7d3;
+  border: 1px solid ${primary};
+  color: ${primary};
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 0px;

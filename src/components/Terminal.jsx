@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const TerminalContainer = styled.div`
-  color: #c6f7d3;
+  color: ${primary};
   font-family: 'Courier New', Courier, monospace;
   padding: 16px;
-  border: 2px solid #c6f7d3;
+  border: 2px solid ${primary};
   border-radius: 8px;
   overflow-y: auto;
   height: calc(100vh - 64px);
@@ -33,7 +34,7 @@ const CommandLine = styled.div`
 
   &::before {
     content: '$ ';
-    color: #c6f7d3;
+    color: ${primary};
     font-weight: bold;
     margin-right: 8px;
   }
@@ -41,7 +42,7 @@ const CommandLine = styled.div`
 
 const Input = styled.input`
   background-color: transparent;
-  color: #c6f7d3;
+  color: ${primary};
   border: none;
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
@@ -52,7 +53,7 @@ const Input = styled.input`
 `;
 
 const Output = styled.div`
-  color: #c6f7d3;
+  color: ${primary};
   white-space: pre-wrap;
 `;
 

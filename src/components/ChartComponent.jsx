@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { primary } from "../utils/colors";
 
 ChartJS.register(
   CategoryScale,
@@ -88,14 +89,14 @@ const data = {
         10, 15, 12, 18, 15, 16, 17, 14, 12, 18, 15, 16, 17, 14, 12, 18, 15,
         16, 17, 14, 12, 18, 15, 16, 17, 14, 12, 18, 15, 16,
       ],
-      borderColor: "#c6f7d3",
-      backgroundColor: "#c6f7d3",
+      borderColor: primary,
+      backgroundColor: primary,
       pointRadius: 2, // Decrease point radius to 2
     },
   ],
 };
 
-const ChartComponent = ({ topic ="BTC/ETH", subTopic="Prepatual" }) => {
+const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
   const [graphData, setGraphData] = useState(data);
 
   useEffect(() => {
@@ -116,23 +117,22 @@ const ChartComponent = ({ topic ="BTC/ETH", subTopic="Prepatual" }) => {
   }, []);
 
   return (
-    <div style={{ maxWidth: "100%", maxHeight: "50%" , position: "relative" }}>
+    <div style={{ maxWidth: "100%", maxHeight: "50%", position: "relative" }}>
       <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
-          color: "#c6f7d3",
+          color: primary,
           fontSize: 14,
           fontWeight: "bold",
         }}
       >
-        <span style={{ fontWeight: "bold" }}>{topic}</span>  {subTopic}
+        <span style={{ fontWeight: "bold" }}>{topic}</span> {subTopic}
       </div>
-      <div style={{ paddingTop:"2rem" }}>
-      <Line options={options} data={graphData} />
+      <div style={{ paddingTop: "2rem" }}>
+        <Line options={options} data={graphData} />
       </div>
-      
     </div>
   );
 };

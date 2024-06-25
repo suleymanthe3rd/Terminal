@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft,  faArrowRight, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const KeyboardKey = styled.button`
   background-color: transparent;
-  color: #c6f7d3;
-  border: 1px solid #c6f7d3;
+  color: ${primary};
+  border: 1px solid ${primary};
   border-radius: 5px;
   padding: 5px 10px;
   margin: 5px;
@@ -44,8 +45,6 @@ const ArrowKeyContainer = styled.div`
   flex-direction: column;
   width: fit-content;
   height: fit-content;
-  
-
 `;
 
 const ArrowKeyRow = styled.div`
@@ -58,7 +57,7 @@ function QwertyKeyboard() {
   return (
     <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="keyboard-container" >
-        <div className="keyboard" style={{ position: 'relative',maxWidth:"fit-content",minWidth:"fit-content" }}>
+        <div className="keyboard" style={{ position: 'relative', maxWidth: 'fit-content', minWidth: 'fit-content' }}>
           <KeyboardRow>
             <KeyboardKey>ESC</KeyboardKey>
             <KeyboardKey>~</KeyboardKey>
@@ -106,7 +105,7 @@ function QwertyKeyboard() {
             <KeyboardKey>&apos;</KeyboardKey>
             <KeyboardKey>\</KeyboardKey>
           </KeyboardRow>
-          <KeyboardRow style={{paddingRight : "6rem"}}>
+          <KeyboardRow style={{ paddingRight: '6rem' }}>
             <KeyboardKey >SHIFT</KeyboardKey>
             <KeyboardKey>&lt;</KeyboardKey>
             <KeyboardKey>Z</KeyboardKey>

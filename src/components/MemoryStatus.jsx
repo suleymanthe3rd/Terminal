@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  color: #c6f7d3;
+  color: ${primary};
   font-family: monospace;
-  border-top: 1px solid #c6f7d3;
+  border-top: 1px solid ${primary};
   width: 100%;
 `;
 
 const Topic = styled.span`
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -46,7 +47,7 @@ const Cell = styled.div`
 
 const Usage = styled.span`
   font-size: 0.85rem;
-  color: #c6f7d3;
+  color: ${primary};
   width: 100%;
   text-align: right;
 
@@ -65,7 +66,7 @@ const MemoryStatus = () => {
       newGrid.push([]);
       for (let j = 0; j < 10; j++) {
         newGrid[i].push({
-          color: Math.random() < 0.5 ? '#c6f7d3' : 'grey',
+          color: Math.random() < 0.5 ? primary : 'grey',
         });
       }
     }
@@ -77,7 +78,7 @@ const MemoryStatus = () => {
       const newColors = {};
       grid.forEach((row, rowIndex) => {
         row.forEach((cell, cellIndex) => {
-          newColors[`${rowIndex},${cellIndex}`] = Math.random() < 0.5 ? '#c6f7d3' : 'grey';
+          newColors[`${rowIndex},${cellIndex}`] = Math.random() < 0.5 ? primary : 'grey';
         });
       });
       setColors(newColors);

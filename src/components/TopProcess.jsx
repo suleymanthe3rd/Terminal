@@ -1,26 +1,26 @@
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  color: #c6f7d3;
+  color: ${primary};
   font-family: monospace;
-  border-top: 1px solid #c6f7d3;
-  border-bottom: 1px solid #c6f7d3;
+  border-top: 1px solid ${primary};
+  border-bottom: 1px solid ${primary};
   width: 100%;
-
 `;
 
 const Table = styled.table`
-  color: #c6f7d3;
+  color: ${primary};
   font-family: monospace;
   border-collapse: collapse;
 `;
 
 const Topic = styled.span`
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;

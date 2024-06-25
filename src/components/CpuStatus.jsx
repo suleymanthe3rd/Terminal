@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const RowContainer = styled.div`
   width: 100%;
   justify-content: center;
   font-family: monospace;
-  color: #c6f7d3;
+  color: ${primary};
   font-size: 0.75rem;
   position: relative;
 `;

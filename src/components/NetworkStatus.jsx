@@ -1,5 +1,5 @@
-
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -10,11 +10,8 @@ const ColumnContainer = styled.div`
   width: 100%;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  border-top: 1px solid #c6f7d3;
-  border-bottom: 1px solid #c6f7d3;
-
-
-
+  border-top: 1px solid ${primary};
+  border-bottom: 1px solid ${primary};
 `;
 
 const NetworkStatusContainer = styled.div`
@@ -24,7 +21,7 @@ const NetworkStatusContainer = styled.div`
   width: 100%;
   justify-content: center;
   font-family: monospace;
-  color: #c6f7d3;
+  color: ${primary};
   font-size: 0.75rem;
   position: relative;
 `;
@@ -43,7 +40,7 @@ const BoldText = styled.span`
 `;
 
 const Topic = styled.span`
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;

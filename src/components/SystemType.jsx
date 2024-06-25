@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { primary } from '../utils/colors';
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ const ColumnContainer = styled.div`
   gap: 0.625rem;
   width: 100%;
   padding-bottom: 0.625rem;
-  border-bottom: 1px solid #c6f7d3;
+  border-bottom: 1px solid ${primary};
 `;
 
 const SystemStatusContainer = styled.div`
@@ -18,7 +19,7 @@ const SystemStatusContainer = styled.div`
   width: 100%;
   justify-content: center;
   font-family: monospace;
-  color: #c6f7d3;
+  color: ${primary};
   font-size: 0.75rem;
   position: relative;
 `;
@@ -37,7 +38,7 @@ const BoldText = styled.span`
 `;
 
 const Topic = styled.span`
-  color: #c6f7d3;
+  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faCog } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { primary } from '../utils/colors';
 
 const FolderComponent = () => {
   const folders = [
@@ -37,8 +38,8 @@ const FolderComponent = () => {
       <FolderGrid>
         {folders.map((folder, index) => (
           <FolderItem key={index} onClick={() => handleFolderClick(folder)}>
-            <FontAwesomeIcon icon={folder.icon} style={{ color: '#c6f7d3' }} />
-            <FolderLabel style={{ color: '#c6f7d3' }}>{folder.label}</FolderLabel>
+            <FontAwesomeIcon icon={folder.icon} style={{ color: primary }} />
+            <FolderLabel style={{ color: primary }}>{folder.label}</FolderLabel>
           </FolderItem>
         ))}
       </FolderGrid>
@@ -66,7 +67,7 @@ const HeaderRow = styled.div`
 `;
 
 const HorizontalLine = styled.div`
-  border-bottom: 1px solid #c6f7d3;
+  border-bottom: 1px solid ${primary};
   width: 100%;
   margin-bottom: 10px;
 `;
@@ -94,17 +95,17 @@ const FolderItem = styled.div`
 const FolderLabel = styled.div`
   font-size: 10px;
   margin-top: 5px;
-  color: #c6f7d3;
+  color: ${primary};
 `;
 
 const FileSystemLabel = styled.div`
   font-size: 12px;
-  color: #c6f7d3;
+  color: ${primary};
 `;
 
 const FolderPath = styled.div`
   font-size: 12px;
-  color: #c6f7d3;
+  color: ${primary};
 `;
 
 export default FolderComponent;
