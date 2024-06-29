@@ -87,7 +87,7 @@ const MatrixRain = () => {
 
   const randomOpacity = () => {
     const opacity = Math.random();
-    return opacity < 0.2 ? 0.2 : 0.8;
+    return opacity < 0.2 ? 0.2 : 1;
   };
 
   return (
