@@ -13,9 +13,11 @@ import ClipboardAccess from '../components/ClipboardAccess';
 import MemoryStatus from '../components/MemoryStatus';
 import Earth from '../components/Earth';
 
+
 const GlobalStyle = createGlobalStyle`
   body {
     overflow-x: hidden;
+    background-color: #010917;
   }
 `;
 
@@ -110,7 +112,7 @@ function Dashboard() {
             <NetworkStatus/>
             <Earth/>
             <TopProcess/>
-            <ChartComponent />
+            <ChartComponent topic='Network' subTopic=''/>
           </StyledSubCol>
         </StyledCol2>
       </StyledRow2>
