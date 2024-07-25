@@ -1,6 +1,49 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import { UniversalContext } from '../context/UniversalContext';
 
+const ClipboardAccess = () => {
+  const { getValue,setValue } = useContext(UniversalContext);
+
+  const handleCopy = () => {
+    // Add your copy logic here
+    setValue('dialogVisible', 'true');
+    console.log('Copy button clicked');
+  
+  };
+
+  const handlePaste = () => {
+    // Add your paste logic here
+    console.log('Paste button clicked');
+  };
+
+
+  return (
+    <ClipboardAccessContainer>
+      <Topic
+      style={{
+        color: getValue('primary'),
+      }}
+      >CLIPBOARD ACCESS</Topic>
+      <ButtonContainer>
+         <Button
+         style={{
+          color: getValue('primary'),
+          borderColor: getValue('primary'),
+        }}
+         onClick={handleCopy}>COPY</Button>
+        <Button 
+        style={{
+          color: getValue('primary'),
+          borderColor: getValue('primary'),
+        }}
+        onClick={handlePaste}>PASTE</Button>
+      </ButtonContainer>
+    </ClipboardAccessContainer>
+  );
+};
+
+//styles
 const ClipboardAccessContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,7 +54,6 @@ const ClipboardAccessContainer = styled.div`
 `;
 
 const Topic = styled.span`
-  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -31,8 +73,7 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
   background-color: transparent;
-  border: 1px solid ${primary};
-  color: ${primary};
+  border: 1px solid ;
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 0px;
@@ -44,17 +85,5 @@ const Button = styled.button`
     color: #fff;
   }
 `;
-
-const ClipboardAccess = () => {
-  return (
-    <ClipboardAccessContainer>
-      <Topic>CLIPBOARD ACCESS</Topic>
-      <ButtonContainer>
-        <Button>COPY</Button>
-        <Button>PASTE</Button>
-      </ButtonContainer>
-    </ClipboardAccessContainer>
-  );
-};
 
 export default ClipboardAccess;

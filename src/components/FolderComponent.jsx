@@ -1,23 +1,24 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faCog } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
-import { useState } from 'react';
-import { primary } from '../utils/colors';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFolder, faCog } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+import { useState, useContext } from "react";
+import { UniversalContext } from "../context/UniversalContext";
 
 const FolderComponent = () => {
+  const { getValue,setValue } = useContext(UniversalContext);
   const folders = [
-    { icon: faFolder, label: 'Cache' },
-    { icon: faFolder, label: 'GPUCache' },
-    { icon: faFolder, label: 'LocalStorage' },
-    { icon: faFolder, label: 'blob_storage' },
-    { icon: faFolder, label: 'fonts' },
-    { icon: faFolder, label: 'keyboards' },
-    { icon: faFolder, label: 'themes' },
-    { icon: faFolder, label: 'Cookies' },
-    { icon: faFolder, label: 'Cookies.journal' },
-    { icon: faFolder, label: 'FraMonoFor...' },
-    { icon: faFolder, label: 'Preferences' },
-    { icon: faCog, label: 'settings.json' },
+    { icon: faFolder, label: "Cache" },
+    { icon: faFolder, label: "GPUCache" },
+    { icon: faFolder, label: "LocalStorage" },
+    { icon: faFolder, label: "blob_storage" },
+    { icon: faFolder, label: "fonts" },
+    { icon: faFolder, label: "keyboards" },
+    { icon: faFolder, label: "themes" },
+    { icon: faFolder, label: "Cookies" },
+    { icon: faFolder, label: "Cookies.journal" },
+    { icon: faFolder, label: "FraMonoFor..." },
+    { icon: faFolder, label: "Preferences" },
+    { icon: faCog, label: "settings.json" },
   ];
 
   const [selectedFolder, setSelectedFolder] = useState(null);
@@ -26,20 +27,40 @@ const FolderComponent = () => {
     setSelectedFolder(folder);
   };
 
+  const handleSystemClick = () => {
+    setValue('settingsVisible', 'true');
+  };
+
   return (
     <FolderContainer>
       <HeaderRow>
-        <FileSystemLabel>FILESYSTEM</FileSystemLabel>
+        <FileSystemLabel style={{ color: getValue("primary") }}>
+          FILESYSTEM
+        </FileSystemLabel>
         {selectedFolder && (
-          <FolderPath>b3/wallet/{selectedFolder.label}</FolderPath>
+          <FolderPath style={{ color: getValue("primary") }}>
+            b3/wallet/{selectedFolder.label}
+          </FolderPath>
         )}
       </HeaderRow>
-      <HorizontalLine />
+      <HorizontalLine style={{ borderColor: getValue("primary") }} />
       <FolderGrid>
         {folders.map((folder, index) => (
-          <FolderItem key={index} onClick={() => handleFolderClick(folder)}>
-            <FontAwesomeIcon icon={folder.icon} style={{ color: primary }} />
-            <FolderLabel style={{ color: primary }}>{folder.label}</FolderLabel>
+          <FolderItem
+            key={index}
+            onClick={
+              folder.icon === faCog
+                ? handleSystemClick
+                : () => handleFolderClick(folder)
+            }
+          >
+            <FontAwesomeIcon
+              icon={folder.icon}
+              style={{ color: getValue("primary") }}
+            />
+            <FolderLabel style={{ color: getValue("primary") }}>
+              {folder.label}
+            </FolderLabel>
           </FolderItem>
         ))}
       </FolderGrid>
@@ -67,7 +88,7 @@ const HeaderRow = styled.div`
 `;
 
 const HorizontalLine = styled.div`
-  border-bottom: 1px solid ${primary};
+  border-bottom: 1px solid;
   width: 100%;
   margin-bottom: 10px;
 `;
@@ -95,17 +116,14 @@ const FolderItem = styled.div`
 const FolderLabel = styled.div`
   font-size: 10px;
   margin-top: 5px;
-  color: ${primary};
 `;
 
 const FileSystemLabel = styled.div`
   font-size: 12px;
-  color: ${primary};
 `;
 
 const FolderPath = styled.div`
   font-size: 12px;
-  color: ${primary};
 `;
 
 export default FolderComponent;

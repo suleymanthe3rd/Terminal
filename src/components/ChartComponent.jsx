@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UniversalContext } from '../context/UniversalContext';
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,7 +12,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { primary } from "../utils/colors";
 
 ChartJS.register(
   CategoryScale,
@@ -23,29 +23,8 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: false,
-      },
-      grid: {
-        display: true,
-      },
-    },
-  },
-  elements: {
-    point: {
-      radius: 2, // Decrease point radius to 2
-    },
-  },
-};
+
+
 
 const labels = [
   "1",
@@ -89,15 +68,52 @@ const data = {
         10, 15, 12, 18, 15, 16, 17, 14, 12, 18, 15, 16, 17, 14, 12, 18, 15,
         16, 17, 14, 12, 18, 15, 16, 17, 14, 12, 18, 15, 16,
       ],
-      borderColor: primary,
-      backgroundColor: primary,
-      pointRadius: 2, // Decrease point radius to 2
+      pointRadius: 1,
+      borderWidth: 1,
+      tension: 0.4, // Add this line to control the smoothness of the line
     },
   ],
 };
 
 const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
   const [graphData, setGraphData] = useState(data);
+  const { getValue } = useContext(UniversalContext);
+
+  const createOptions = (primaryColor) => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+        
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        ticks: {
+          display: true,
+          color: primaryColor
+        },
+        
+        grid: {
+          display: false,
+        },
+      },
+    },
+    elements: {
+      point: {
+        radius: 1, 
+      },
+    },
+  });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -109,29 +125,44 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
             const randomValue = Math.floor(Math.random() * 10);
             return dataPoint + randomValue;
           }),
+          borderColor: getValue('primary'),
+          backgroundColor: getValue('primary'),
+          
         })),
       }));
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [getValue]);
+
+  useEffect(() => {
+    setGraphData((prevData) => ({
+      ...prevData,
+      datasets: prevData.datasets.map((dataset) => ({
+        ...dataset,
+        borderColor: getValue('primary'),
+        backgroundColor: getValue('primary'),
+       
+      })),
+    }));
+  }, [getValue]);
 
   return (
-    <div style={{ maxWidth: "100%", maxHeight: "50%", position: "relative" }}>
+    <div style={{ width: "100%", height: "fit-content", position: "relative" }}>
       <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
-          color: primary,
-          fontSize: 14,
+          color: getValue('primary'),
+          fontSize: 12,
           fontWeight: "bold",
         }}
       >
         <span style={{ fontWeight: "bold" }}>{topic}</span> {subTopic}
       </div>
-      <div style={{ paddingTop: "2rem" }}>
-        <Line options={options} data={graphData} />
+      <div style={{ paddingTop: "1rem" }}>
+        <Line style={{ height: 50,width: '15rem' }} options={createOptions(getValue('primary'))} data={graphData} />
       </div>
     </div>
   );

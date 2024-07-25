@@ -1,21 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import { UniversalContext } from '../context/UniversalContext';
 
-const WatchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 3em;
-  color: ${primary};
-  font-weight: bold; /* Add this to make the text bold */
-  border-top: 1px solid ${primary};
-  border-bottom: 1px solid ${primary}; /* Add this to add top and bottom borders */
-  width: 100%;
-`;
 
 const Watch = () => {
+  const { getValue } = useContext(UniversalContext);
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -34,10 +23,26 @@ const Watch = () => {
   });
 
   return (
-    <WatchContainer>
+    <WatchContainer
+    primaryColor={getValue('primary')}
+    >
       {formattedTime}
     </WatchContainer>
   );
 };
+
+//styles
+const WatchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3em;
+  color: ${(props)=>props.primaryColor};
+  font-weight: bold;
+  border-top: 1px solid ${(props)=>props.primaryColor};
+  border-bottom: 1px solid ${(props)=>props.primaryColor};
+  width: 100%;
+`;
 
 export default Watch;

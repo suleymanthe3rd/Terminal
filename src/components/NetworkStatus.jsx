@@ -1,5 +1,40 @@
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import { UniversalContext } from '../context/UniversalContext';
+import { useContext } from 'react';
+
+
+const NetworkStatus = () => {
+  const { getValue } = useContext(UniversalContext);
+  return (
+    <ColumnContainer
+    style={{
+      borderColor:getValue('primary'),
+     }}
+    >
+      <Topic
+       style={{ color: getValue('primary'),
+        borderColor:getValue('primary'),
+       }}
+      >NETWORK STATUS</Topic>
+      <NetworkStatusContainer
+       style={{ color: getValue('primary'),
+       }}
+      >
+        <NetworkStatusItem>
+          <span>STATE</span> <BoldText>ONLINE</BoldText>
+        </NetworkStatusItem>
+        <NetworkStatusItem>
+          <span>IPv4</span> <BoldText>86.252.116.139</BoldText>
+        </NetworkStatusItem>
+        <NetworkStatusItem>
+          <span>PING</span> <BoldText>14ms</BoldText>
+        </NetworkStatusItem>
+      </NetworkStatusContainer>
+    </ColumnContainer>
+  );
+};
+
+//styles related
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -10,8 +45,8 @@ const ColumnContainer = styled.div`
   width: 100%;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  border-top: 1px solid ${primary};
-  border-bottom: 1px solid ${primary};
+  border-top: 1px solid ;
+  border-bottom: 1px solid ;
 `;
 
 const NetworkStatusContainer = styled.div`
@@ -21,7 +56,6 @@ const NetworkStatusContainer = styled.div`
   width: 100%;
   justify-content: center;
   font-family: monospace;
-  color: ${primary};
   font-size: 0.75rem;
   position: relative;
 `;
@@ -40,7 +74,6 @@ const BoldText = styled.span`
 `;
 
 const Topic = styled.span`
-  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -51,23 +84,6 @@ const Topic = styled.span`
   }
 `;
 
-const NetworkStatus = () => {
-  return (
-    <ColumnContainer>
-      <Topic>NETWORK STATUS</Topic>
-      <NetworkStatusContainer>
-        <NetworkStatusItem>
-          <span>STATE</span> <BoldText>ONLINE</BoldText>
-        </NetworkStatusItem>
-        <NetworkStatusItem>
-          <span>IPv4</span> <BoldText>86.252.116.139</BoldText>
-        </NetworkStatusItem>
-        <NetworkStatusItem>
-          <span>PING</span> <BoldText>14ms</BoldText>
-        </NetworkStatusItem>
-      </NetworkStatusContainer>
-    </ColumnContainer>
-  );
-};
+
 
 export default NetworkStatus;

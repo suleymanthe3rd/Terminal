@@ -1,20 +1,80 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import { UniversalContext } from '../context/UniversalContext';
 
+const MemoryStatus = () => {
+  const [grid, setGrid] = useState([]);
+  const [opacities, setOpacities] = useState({});
+  const { getValue } = useContext(UniversalContext);
+
+  useEffect(() => {
+    const newGrid = [];
+    for (let i = 0; i < 50; i++) {
+      newGrid.push([]);
+      for (let j = 0; j < 10; j++) {
+        newGrid[i].push({
+          opacity: 0.2,
+        });
+      }
+    }
+    setGrid(newGrid);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const newOpacities = {};
+      grid.forEach((row, rowIndex) => {
+        row.forEach((cell, cellIndex) => {
+          newOpacities[`${rowIndex},${cellIndex}`] = Math.random() < 0.2 ? 1 : 0.2;
+        });
+      });
+      setOpacities(newOpacities);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [grid]);
+
+  return (
+    <Container
+    style={{ color: getValue('primary'),
+      borderColor:getValue('primary'),
+     }}
+    >
+      <TopicRow>
+        <Topic
+        style={{ color: getValue('primary'),
+         }}
+        >MEMORY STATUS</Topic>
+        <Usage
+        style={{ color: getValue('primary'),
+         }}
+        >using 1.5 GB of 7.5 GB</Usage>
+      </TopicRow>
+      <GridContainer>
+        {grid.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <Cell 
+              
+              key={cellIndex} color={getValue('primary')} opacity={opacities[`${rowIndex},${cellIndex}`]} />
+            ))}
+          </div>
+        ))}
+      </GridContainer>
+    </Container>
+  );
+};
+
+//styles
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  color: ${primary};
   font-family: monospace;
-  border-top: 1px solid ${primary};
   width: 100%;
 `;
 
 const Topic = styled.span`
-  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -31,23 +91,27 @@ const TopicRow = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 1rem;
+   @media (max-width: 576px) {
+   flex-direction:column;
+    justify-content: center;
+  }
 `;
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(20, 1fr);
+  grid-template-columns: repeat(50, 1fr);
 `;
 
 const Cell = styled.div`
-  width: 4px;
-  height: 4px;
-  margin: 5px;
+  width: 2px;
+  height: 2px;
+  margin: 2px;
   background-color: ${({ color }) => color};
+  opacity: ${({ opacity }) => opacity};
 `;
 
 const Usage = styled.span`
   font-size: 0.85rem;
-  color: ${primary};
   width: 100%;
   text-align: right;
 
@@ -56,53 +120,5 @@ const Usage = styled.span`
   }
 `;
 
-const MemoryStatus = () => {
-  const [grid, setGrid] = useState([]);
-  const [colors, setColors] = useState({});
-
-  useEffect(() => {
-    const newGrid = [];
-    for (let i = 0; i < 20; i++) {
-      newGrid.push([]);
-      for (let j = 0; j < 10; j++) {
-        newGrid[i].push({
-          color: Math.random() < 0.5 ? primary : 'grey',
-        });
-      }
-    }
-    setGrid(newGrid);
-  }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newColors = {};
-      grid.forEach((row, rowIndex) => {
-        row.forEach((cell, cellIndex) => {
-          newColors[`${rowIndex},${cellIndex}`] = Math.random() < 0.5 ? primary : 'grey';
-        });
-      });
-      setColors(newColors);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [grid]);
-
-  return (
-    <Container>
-      <TopicRow>
-        <Topic>MEMORY STATUS</Topic>
-        <Usage>using 1.5 GB of 7.5 GB</Usage>
-      </TopicRow>
-      <GridContainer>
-        {grid.map((row, rowIndex) => (
-          <div key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <Cell key={cellIndex} color={colors[`${rowIndex},${cellIndex}`]} />
-            ))}
-          </div>
-        ))}
-      </GridContainer>
-    </Container>
-  );
-};
 
 export default MemoryStatus;

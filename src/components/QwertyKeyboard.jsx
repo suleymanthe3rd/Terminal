@@ -1,57 +1,19 @@
+/* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import {  useContext } from "react";
+import { UniversalContext } from '../context/UniversalContext';
 
-const KeyboardKey = styled.button`
-  background-color: transparent;
-  color: ${primary};
-  border: 1px solid ${primary};
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin: 5px;
-  font-size: 12px;
-  cursor: pointer;
 
-  &:hover {
-    border-color: #ddd;
-    box-shadow: 0 0 5px #ddd;
-  }
-
-  /* Add media query for mobile view */
-  @media only screen and (max-width: 768px) {
-    font-size: 8px;
-    padding: 3px 5px;
-    margin: 2px;
-  }
-`;
-
-const KeyboardRow = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-right: 2rem;
-  /* Add media query for mobile view */
-  @media only screen and (max-width: 768px) {
-    margin-left: 0;
-    text-align: center;
-  }
-`;
-
-const ArrowKeyContainer = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  height: fit-content;
-`;
-
-const ArrowKeyRow = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const KeyboardKey = ({ children, ...props }) => {
+  const playSound = () => {
+    const audio = new Audio('/audio/granted.wav');
+    audio.play();
+  };
+  const { getValue } = useContext(UniversalContext);
+  return <StyledButton color={getValue('primary')} {...props} onClick={playSound}>{children}</StyledButton>;
+};
 
 function QwertyKeyboard() {
   return (
@@ -143,5 +105,58 @@ function QwertyKeyboard() {
     </div>
   );
 }
+//styles
+
+
+const StyledButton = styled.button`
+  color:${({ color }) => color};
+  background-color: transparent;
+  border: 1px solid ;
+  border-radius: 5px;
+  boarder-color:${({ color }) => color};
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #ddd;
+    box-shadow: 0 0 5px #ddd;
+  }
+
+  /* Add media query for mobile view */
+  @media only screen and (max-width: 768px) {
+    font-size: 8px;
+    padding: 3px 5px;
+    margin: 2px;
+  }
+`;
+
+const KeyboardRow = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-right: 2rem;
+  /* Add media query for mobile view */
+  @media only screen and (max-width: 768px) {
+    margin-left: 0;
+    text-align: center;
+  }
+`;
+
+const ArrowKeyContainer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+`;
+
+const ArrowKeyRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default QwertyKeyboard;

@@ -1,44 +1,15 @@
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import {  useContext } from "react";
+import { UniversalContext } from '../context/UniversalContext';
 
-const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  width: 25%; /* adjusted width to 25% for four columns */
-`;
-
-const RowContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  font-family: monospace;
-  color: ${primary};
-  font-size: 0.75rem;
-  position: relative;
-`;
-
-const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
-`;
-
-const BoldText = styled.span`
-  font-weight: bold;
-  font-size: 0.85rem;
-`;
 
 const CpuStatus = () => {
+  const { getValue } = useContext(UniversalContext);
+
   return (
-    <RowContainer>
+    <RowContainer
+    style={{ color: getValue('primary') }}
+    >
       <ColumnContainer>
         <Item>
           <BoldText>TEMP</BoldText>
@@ -66,5 +37,42 @@ const CpuStatus = () => {
     </RowContainer>
   );
 };
+
+
+//styles
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom:solid 1px;
+  gap: 0.625rem;
+`;
+
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 0.75rem;
+  position: relative;
+`;
+
+const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0.625rem;
+  padding-left: 0.625rem;
+`;
+
+const BoldText = styled.span`
+  font-weight: bold;
+  font-size: 0.85rem;
+`;
+
 
 export default CpuStatus;

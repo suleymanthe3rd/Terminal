@@ -1,4 +1,5 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import { useContext, useEffect } from 'react';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
 import QwertyKeyboard from '../components/QwertyKeyboard';
 import FolderComponent from '../components/FolderComponent';
@@ -12,13 +13,132 @@ import TopProcess from '../components/TopProcess';
 import ClipboardAccess from '../components/ClipboardAccess';
 import MemoryStatus from '../components/MemoryStatus';
 import Earth from '../components/Earth';
+import Settings from '../components/Settings';
+import { UniversalContext } from '../context/UniversalContext';
+import DialogBox from '../components/DialogBox';
 
+function Dashboard() {
+  const { getValue } = useContext(UniversalContext);
+
+  const playSound = () => {
+    const audio = new Audio('/audio/panels.wav');
+    audio.play();
+  };
+
+  useEffect(() => {
+    playSound();
+  }, []);
+
+  return (
+    <Container fluid className="position-relative">
+      <GlobalStyle backgroundColor={getValue('background')} primaryColor={getValue('primary')} />
+      <Settings/>
+      <DialogBox/>
+      <StyledRow2 className="justify-content-space-between">
+        <StyledCol2 xs={12} md={4} lg={4}>
+          <StyledSubCol xs={12}>
+            <StyledComponent animationDuration={500} animationDelay={6000} onAnimationEnd={playSound}>
+              <Watch />
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={5500} onAnimationEnd={playSound}>
+              <SystemType />
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={5000} onAnimationEnd={playSound}>
+              <ChartComponent topic='CPU USAGE' subTopic=''/>
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={4500} onAnimationEnd={playSound}>
+              <CpuStatus/>
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={4000} onAnimationEnd={playSound}>
+              <MemoryStatus/>
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={3500} onAnimationEnd={playSound}>
+              <ClipboardAccess/>
+            </StyledComponent>
+          </StyledSubCol>
+        </StyledCol2>
+        <StyledCol2 xs={12} md={4} lg={4}>
+          <StyledSubCol xs={12}>
+            <StyledComponent animationDuration={500} animationDelay={3000} onAnimationEnd={playSound}>
+              <Terminal/>
+            </StyledComponent>
+          </StyledSubCol>
+        </StyledCol2>
+        <StyledCol2 xs={12} md={4} lg={4}>
+          <StyledSubCol xs={12}>
+            <StyledComponent animationDuration={500} animationDelay={2500} onAnimationEnd={playSound}>
+              <NetworkStatus/>
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={2000} onAnimationEnd={playSound}>
+              <Earth/>
+            </StyledComponent>
+            <StyledComponent animationDuration={500} animationDelay={1500} onAnimationEnd={playSound}>
+              <TopProcess/>
+            </StyledComponent>
+          </StyledSubCol>
+        </StyledCol2>
+      </StyledRow2>
+      <StyledRow1>
+        <StyledCol1 xs={12} md={6} lg={6} className="d-flex justify-content-center">
+          <StyledComponent animationDuration={500} animationDelay={500} onAnimationEnd={playSound}>
+            <FolderComponent />
+          </StyledComponent>
+        </StyledCol1>
+        <StyledCol1 xs={12} md={6} lg={6} className="d-flex justify-content-center">
+          <StyledComponent animationDuration={500} animationDelay={0} onAnimationEnd={playSound}>
+            <QwertyKeyboard />
+          </StyledComponent>
+        </StyledCol1>
+      </StyledRow1>
+    </Container>
+  );
+}
+
+//styles
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const GlobalStyle = createGlobalStyle`
   body {
     overflow-x: hidden;
-    background-color: #010917;
+    background-color: ${(props)=>props.backgroundColor};
+
+    &::-webkit-scrollbar {
+    
+    width: 8px; /* width of the scrollbar */
+    height: 8px; /* height of the scrollbar */
+    background-color: ${(props)=>props.backgroundColor}; /* background color of the scrollbar */
   }
+
+  &::-webkit-scrollbar-thumb {
+    
+    background-color: ${(props)=>props.primaryColor}; /* color of the scrollbar thumb */
+    border-radius: 1px; /* rounded corners of the scrollbar thumb */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${(props)=>props.primaryColor}; /* hover color of the scrollbar thumb */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${(props)=>props.backgroundColor}; /* background color of the scrollbar track */
+  }
+  }
+`;
+
+const StyledComponent = styled.div`
+  opacity: 0; /* initial opacity is 0 */
+  animation: ${fadeIn} ${props => props.animationDuration}ms cubic-bezier(0.1, 0.5, 0.6, 1) forwards;
+  animation-delay: ${props => props.animationDelay}ms;
+  animation-fill-mode: forwards;
 `;
 
 const StyledRow1 = styled(Row)`
@@ -27,8 +147,7 @@ const StyledRow1 = styled(Row)`
   justify-content: center;
   width: 100%;
   height: fit-content;
-  padding-bottom: 20px;
-
+  padding-bottom: 5px;
   @media (max-width: 768px) {
     flex-direction: column;
     overflow-y: auto;
@@ -40,9 +159,6 @@ const StyledRow2 = styled(Row)`
   justify-content: space-between;
   width: 100%;
   height: fit-content;
-  margin-bottom: 1rem;
-  gap: 20px;
-
   @media (max-width: 768px) {
     flex-direction: column;
     overflow-y: auto;
@@ -50,9 +166,8 @@ const StyledRow2 = styled(Row)`
 `;
 
 const StyledCol1 = styled(Col)`
-  flex: 1;
-  margin: 0.5rem;
   display: flex;
+  margin: 0.5rem;
   align-items: center;
   height: fit-content;
   align-self: center;
@@ -68,7 +183,6 @@ const StyledCol2 = styled(Col)`
   align-items: center;
   justify-content: center;
   height: fit-content;
-  padding: 20px;
 
   @media (max-width: 576px) {
     flex-basis: 100%;
@@ -80,52 +194,10 @@ const StyledSubCol = styled(Col)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-
+   gap:0.5rem;
   @media (max-width: 576px) {
     flex-basis: 100%;
   }
 `;
-
-function Dashboard() {
-  return (
-    <Container fluid className="position-relative">
-      <GlobalStyle />
-      <StyledRow2 className="justify-content-space-between">
-        <StyledCol2 xs={12} md={4} lg={4}>
-          <StyledSubCol xs={12}>
-            <Watch />
-            <SystemType />
-            <ChartComponent topic='CPU USAGE' subTopic=''/>
-            <CpuStatus/>
-            <MemoryStatus/>
-            <ClipboardAccess/>
-          </StyledSubCol>
-        </StyledCol2>
-        <StyledCol2 xs={12} md={4} lg={4}>
-          <StyledSubCol xs={12}>
-           <Terminal/>
-          </StyledSubCol>
-        </StyledCol2>
-        <StyledCol2 xs={12} md={4} lg={4}>
-          <StyledSubCol xs={12}>
-            <NetworkStatus/>
-            <Earth/>
-            <TopProcess/>
-            <ChartComponent topic='Network' subTopic=''/>
-          </StyledSubCol>
-        </StyledCol2>
-      </StyledRow2>
-      <StyledRow1>
-        <StyledCol1 xs={12} md={6} lg={6} className="d-flex justify-content-center">
-          <FolderComponent />
-        </StyledCol1>
-        <StyledCol1 xs={12} md={6} lg={6} className="d-flex justify-content-center">
-          <QwertyKeyboard />
-        </StyledCol1>
-      </StyledRow1>
-    </Container>
-  );
-}
 
 export default Dashboard;

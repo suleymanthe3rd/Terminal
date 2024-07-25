@@ -1,56 +1,25 @@
+import {  useContext } from "react";
+import { UniversalContext } from '../context/UniversalContext';
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  color: ${primary};
-  font-family: monospace;
-  border-top: 1px solid ${primary};
-  border-bottom: 1px solid ${primary};
-  width: 100%;
-`;
-
-const Table = styled.table`
-  color: ${primary};
-  font-family: monospace;
-  border-collapse: collapse;
-`;
-
-const Topic = styled.span`
-  color: ${primary};
-  font-weight: bold;
-  font-size: 0.85rem;
-  width: 100%;
-  text-align: left;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
-`;
-
-const Th = styled.th`
-  ${({ width }) => `width: ${width};`}
-  text-align: center;
-`;
-
-const Td = styled.td`
-  text-align: center;
-`;
 
 const TopProcess = () => {
+  const { getValue } = useContext(UniversalContext);
   return (
-    <Container>
-      <Topic>TOP PROCESSES</Topic>
-      <Table>
+    <Container
+    style={{ color: getValue('primary'), borderColor:getValue('primary')}}
+    >
+      <Topic
+      style={{ color: getValue('primary') }}
+      >TOP PROCESSES</Topic>
+      <Table
+      style={{ color: getValue('primary') }}
+      >
         <thead>
           <tr>
-            <Th width="80px">PID</Th>
-            <Th width="150px">NAME</Th>
-            <Th width="50px">CPU</Th>
-            <Th width="50px">MEM</Th>
+          <Th width="4rem">PID</Th>
+<Th width="7.5rem">NAME</Th>
+<Th width="2.5rem">CPU</Th>
+<Th width="2.5rem">MEM</Th>
           </tr>
         </thead>
         <tbody>
@@ -89,5 +58,44 @@ const TopProcess = () => {
     </Container>
   );
 };
+
+//styles
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  font-family: monospace;
+  border-top: 1px solid;
+  border-bottom: 1px solid ;
+  width: 100%;
+`;
+
+const Table = styled.table`
+  font-family: monospace;
+  border-collapse: collapse;
+`;
+
+const Topic = styled.span`
+  font-weight: bold;
+  font-size: 0.85rem;
+  width: 100%;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+`;
+
+const Th = styled.th`
+  ${({ width }) => `width: ${width};`}
+  text-align: center;
+`;
+
+const Td = styled.td`
+  text-align: center;
+`;
+
 
 export default TopProcess;

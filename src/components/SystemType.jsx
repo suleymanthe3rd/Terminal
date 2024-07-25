@@ -1,6 +1,31 @@
 import styled from 'styled-components';
-import { primary } from '../utils/colors';
+import {  useContext } from "react";
+import { UniversalContext } from '../context/UniversalContext';
 
+const SystemType = () => {
+  const { getValue } = useContext(UniversalContext);
+  return (
+    <ColumnContainer style={{ borderColor: getValue('primary') }}>
+      <Topic style={{ color: getValue('primary') }}>SYSTEM UPTIME STATUS</Topic>
+      <SystemStatusContainer style={{ color: getValue('primary') }}>
+        <SystemStatusItem>
+          <span>2018</span> <BoldText>SEP 16</BoldText>
+        </SystemStatusItem>
+        <SystemStatusItem>
+          <span>UPTIME</span> <BoldText>0:04:30</BoldText>
+        </SystemStatusItem>
+        <SystemStatusItem>
+          <span>TYPE</span> <BoldText>LINUX</BoldText>
+        </SystemStatusItem>
+        <SystemStatusItem>
+          <span>POWER</span> <BoldText>WIRED</BoldText>
+        </SystemStatusItem>
+      </SystemStatusContainer>
+    </ColumnContainer>
+  );
+};
+
+//styles
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,7 +34,7 @@ const ColumnContainer = styled.div`
   gap: 0.625rem;
   width: 100%;
   padding-bottom: 0.625rem;
-  border-bottom: 1px solid ${primary};
+  border-bottom: 1px solid ;
 `;
 
 const SystemStatusContainer = styled.div`
@@ -19,7 +44,6 @@ const SystemStatusContainer = styled.div`
   width: 100%;
   justify-content: center;
   font-family: monospace;
-  color: ${primary};
   font-size: 0.75rem;
   position: relative;
 `;
@@ -38,7 +62,6 @@ const BoldText = styled.span`
 `;
 
 const Topic = styled.span`
-  color: ${primary};
   font-weight: bold;
   font-size: 0.85rem;
   width: 100%;
@@ -48,27 +71,5 @@ const Topic = styled.span`
     text-align: center;
   }
 `;
-
-const SystemType = () => {
-  return (
-    <ColumnContainer>
-      <Topic>SYSTEM UPTIME STATUS</Topic>
-      <SystemStatusContainer>
-        <SystemStatusItem>
-          <span>2018</span> <BoldText>SEP 16</BoldText>
-        </SystemStatusItem>
-        <SystemStatusItem>
-          <span>UPTIME</span> <BoldText>0:04:30</BoldText>
-        </SystemStatusItem>
-        <SystemStatusItem>
-          <span>TYPE</span> <BoldText>LINUX</BoldText>
-        </SystemStatusItem>
-        <SystemStatusItem>
-          <span>POWER</span> <BoldText>WIRED</BoldText>
-        </SystemStatusItem>
-      </SystemStatusContainer>
-    </ColumnContainer>
-  );
-};
 
 export default SystemType;
