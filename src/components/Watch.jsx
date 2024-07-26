@@ -24,7 +24,7 @@ const Watch = () => {
 
   return (
     <WatchContainer
-    primaryColor={getValue('primary')}
+    primarycolor={getValue('primary')}
     >
       {formattedTime}
     </WatchContainer>
@@ -38,10 +38,10 @@ const WatchContainer = styled.div`
   justify-content: center;
   font-family: 'Courier New', Courier, monospace;
   font-size: 3em;
-  color: ${(props)=>props.primaryColor};
+  color: ${(props)=>props.primarycolor};
   font-weight: bold;
-  border-top: 1px solid ${(props)=>props.primaryColor};
-  border-bottom: 1px solid ${(props)=>props.primaryColor};
+  border-top: 1px solid ${(props)=>props.primarycolor};
+  border-bottom: 1px solid ${(props)=>props.primarycolor};
   width: 100%;
 `;
 

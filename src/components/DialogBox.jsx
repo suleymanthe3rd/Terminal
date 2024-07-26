@@ -27,7 +27,7 @@ const DialogBox = () => {
     <div>
       {isOpen && (
         <ModalContainer>
-          <DialogBoxContainer primaryColor={getValue('primary')} backgroundColor={getValue('background')} >
+          <DialogBoxContainer primarycolor={getValue('primary')} backgroundcolor={getValue('background')} >
             <DialogBoxHeader
             style={{ color: getValue('primary') }}
             >
@@ -86,10 +86,10 @@ const DialogBoxContainer = styled.div`
   align-items: center; 
   justify-content: center; 
   text-align: center; 
-  background-color:${props=>props.primaryColor};
+  background-color:${props=>props.primarycolor};
   &::before {
     content: "";
-    background-color: ${props=>props.backgroundColor};
+    background-color: ${props=>props.backgroundcolor};
     inset: 2px;
     position: absolute;
     z-index: -1;

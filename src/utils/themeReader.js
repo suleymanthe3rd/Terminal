@@ -43,10 +43,10 @@ function getThemesData() {
 
   Object.keys(themes).forEach((theme) => {
     const colors = themes[theme].colors;
-    const primaryColor = `#${rgbToHex(colors.r, colors.g, colors.b)}`;
+    const primarycolor = `#${rgbToHex(colors.r, colors.g, colors.b)}`;
     const secondaryColor = colors.grey;
-    const backgroundColor = colors.light_black;
-    themeData[theme] = { primaryColor, secondaryColor,backgroundColor};
+    const backgroundcolor = colors.light_black;
+    themeData[theme] = { primarycolor, secondaryColor,backgroundcolor};
   });
 
   return themeData;

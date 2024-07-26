@@ -12,14 +12,14 @@ function App() {
     if(localStorage.getItem('selectedTheme')){
       const theme =localStorage.getItem('selectedTheme');
       setValue('selectedTheme', theme);
-      setValue('primary', themeData[theme]['primaryColor']);
+      setValue('primary', themeData[theme]['primarycolor']);
       setValue('secondary', themeData[theme]['secondaryColor']);
-      setValue('background', themeData[theme]['backgroundColor']);
+      setValue('background', themeData[theme]['backgroundcolor']);
     }else{
       localStorage.setItem('selectedTheme','apollo');
-      setValue('primary', themeData['apollo']['primaryColor']);
+      setValue('primary', themeData['apollo']['primarycolor']);
       setValue('secondary', themeData['apollo']['secondaryColor']);
-      setValue('background', themeData['apollo']['backgroundColor']);
+      setValue('background', themeData['apollo']['backgroundcolor']);
     }
   };
 

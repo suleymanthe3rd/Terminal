@@ -79,7 +79,7 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
   const [graphData, setGraphData] = useState(data);
   const { getValue } = useContext(UniversalContext);
 
-  const createOptions = (primaryColor) => ({
+  const createOptions = (primarycolor) => ({
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -100,7 +100,7 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
       y: {
         ticks: {
           display: true,
-          color: primaryColor
+          color: primarycolor
         },
         
         grid: {
@@ -126,7 +126,7 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
             return dataPoint + randomValue;
           }),
           borderColor: getValue('primary'),
-          backgroundColor: getValue('primary'),
+          backgroundcolor: getValue('primary'),
           
         })),
       }));
@@ -141,7 +141,7 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
       datasets: prevData.datasets.map((dataset) => ({
         ...dataset,
         borderColor: getValue('primary'),
-        backgroundColor: getValue('primary'),
+        backgroundcolor: getValue('primary'),
        
       })),
     }));

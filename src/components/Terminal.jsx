@@ -48,11 +48,11 @@ const Terminal = () => {
       <TabContainer>
         {tabs.map((tab) => (
           <Tab
-          primaryColor={getValue('primary')}
+          primarycolor={getValue('primary')}
           style={{borderColor:getValue('primary')}}
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            isselected={tab.id === currentTab}
+            isselected={tab.id === currentTab ? 'selected' : ''}
           >
             <TabTextWrapper>
               <span>{tab.title}</span>
@@ -61,13 +61,13 @@ const Terminal = () => {
         ))}
       </TabContainer>
       <TabContent 
-      primaryColor={getValue('primary')}
+      primarycolor={getValue('primary')}
       style={{  overflowY: currentTab === 1 ? 'hidden' : 'auto', height: '100%' }}>
   {currentTab === 1 ? (
     <Matrix />
   ) : (
     <Output
-    primaryColor={getValue('primary')}
+    primarycolor={getValue('primary')}
     >
       {tabs.find((tab) => tab.id === currentTab).commands.map((command, index) => (
         <CommandLine key={index}>
@@ -79,7 +79,7 @@ const Terminal = () => {
           <span>$</span>
         )}
         <Input
-          primaryColor={getValue('primary')}
+          primarycolor={getValue('primary')}
           value={currentCommand}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -138,19 +138,17 @@ const Tab = styled.div`
   cursor: pointer;
   width: 100%;
   font-size: 0.7rem;
-  font-weight:bold;
+  font-weight: bold;
   text-align: center;
-  position: relative; /* add relative positioning */
-  border: 1px solid ;
-  transform: skewX(30deg); /* add skew to create parallelogram shape */
-  padding: 0.01rem 2rem; /* add padding to compensate for skew */
-  border-right: 1px solid ;
- 
+  position: relative;
+  border: 1px solid;
+  transform: skewX(30deg);
+  padding: 0.01rem 2rem;
 
-  ${({ isselected,primaryColor }) =>
-    isselected &&
+  ${({ isselected, primarycolor }) =>
+    isselected === 'selected' &&
     `
-      background-color: ${primaryColor};
+      background-color: ${primarycolor};
       color: black;
     `}
 `;
@@ -164,7 +162,7 @@ const TabContent = styled.div`
 overflow-y: auto;
   padding: 16px;
   height: 100%;
-  border-right: 1px solid ${(props)=>props.primaryColor};
+  border-right: 1px solid ${(props)=>props.primarycolor};
   /* Customize scrollbar design */
   &::-webkit-scrollbar {
     
@@ -175,7 +173,7 @@ overflow-y: auto;
 
   &::-webkit-scrollbar-thumb {
     
-    background-color: ${(props)=>props.primaryColor}; /* color of the scrollbar thumb */
+    background-color: ${(props)=>props.primarycolor}; /* color of the scrollbar thumb */
     border-radius: 1px; /* rounded corners of the scrollbar thumb */
   }
 
@@ -195,7 +193,7 @@ const CommandLine = styled.div`
 
 const Input = styled.textarea`
   background-color: transparent;
-  color: ${(props)=>props.primaryColor};
+  color: ${(props)=>props.primarycolor};
   border: none;
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
@@ -207,12 +205,12 @@ const Input = styled.textarea`
   scrollbar-width: none;
 
    &::placeholder {
-    color: ${(props) => props.primaryColor};
+    color: ${(props) => props.primarycolor};
   }
 `;
 
 const Output = styled.div`
-  color: ${(props)=>props.primaryColor};
+  color: ${(props)=>props.primarycolor};
   white-space: normal;
   word-break: break-word;
   overflow-wrap: break-word;

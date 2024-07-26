@@ -10,8 +10,8 @@ const TableHeader = ({ children, ...props }) => {
   return (
     <StyledTableHeader
       secondaryColor={getValue("secondary")}
-      backgroundColor={getValue("background")}
-      primaryColor={getValue("primary")}
+      backgroundcolor={getValue("background")}
+      primarycolor={getValue("primary")}
       {...props}
     >
       {children}
@@ -24,7 +24,7 @@ const TableCell = ({ children, ...props }) => {
   return (
     <StyledTableCell
       secondaryColor={getValue("secondary")}
-      primaryColor={getValue("primary")}
+      primarycolor={getValue("primary")}
       {...props}
     >
       {children}
@@ -36,9 +36,9 @@ const Input = ({ children, ...props }) => {
   const { getValue } = useContext(UniversalContext);
   return (
     <StyledInput
-      backgroundColor={getValue("background")}
+      backgroundcolor={getValue("background")}
       secondaryColor={getValue("secondary")}
-      primaryColor={getValue("primary")}
+      primarycolor={getValue("primary")}
       {...props}
     >
       {children}
@@ -50,9 +50,9 @@ const Select = ({ children, ...props }) => {
   const { getValue } = useContext(UniversalContext);
   return (
     <StyledSelect
-      backgroundColor={getValue("background")}
+      backgroundcolor={getValue("background")}
       secondaryColor={getValue("secondary")}
-      primaryColor={getValue("primary")}
+      primarycolor={getValue("primary")}
       {...props}
     >
       {children}
@@ -63,7 +63,7 @@ const Select = ({ children, ...props }) => {
 const Button = ({ children, ...props }) => {
   const { getValue } = useContext(UniversalContext);
   return (
-    <StyledButton primaryColor={getValue("primary")} {...props}>
+    <StyledButton primarycolor={getValue("primary")} {...props}>
       {children}
     </StyledButton>
   );
@@ -146,9 +146,9 @@ const Settings = () => {
   const setTheme = (theme) => {
      const themeData = getThemesData();
       localStorage.setItem('selectedTheme', theme);
-      setValue('primary', themeData[theme]['primaryColor']);
+      setValue('primary', themeData[theme]['primarycolor']);
       setValue('secondary', themeData[theme]['secondaryColor']);
-      setValue('background', themeData[theme]['backgroundColor']);
+      setValue('background', themeData[theme]['backgroundcolor']);
 
   };
 
@@ -156,18 +156,18 @@ const Settings = () => {
     isVisible && (
       <ModelContainer>
         <SettingsContainer
-          backgroundColor={getValue("background")}
-          primaryColor={getValue("primary")}
+          backgroundcolor={getValue("background")}
+          primarycolor={getValue("primary")}
         >
           <HeadingContainer
             secondaryColor={getValue("secondary")}
-            primaryColor={getValue("primary")}
+            primarycolor={getValue("primary")}
           >
             <h1>Settings</h1>
             <h3>(v2.2.2)</h3>
           </HeadingContainer>
           <SettingsTableContainer>
-            <SettingsTable primaryColor={getValue("primary")}>
+            <SettingsTable primarycolor={getValue("primary")}>
               <thead>
                 <tr>
                   <TableHeader>Key</TableHeader>
@@ -501,10 +501,10 @@ const ModelContainer = styled.div`
 `;
 const SettingsContainer = styled.div`
   position: relative;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   font-family: monospace;
   padding: 1.25rem;
-  border: 1px solid ${(props) => props.primaryColor};
+  border: 1px solid ${(props) => props.primarycolor};
   max-width: 50%;
   height: 80vh;
 
@@ -527,7 +527,7 @@ const SettingsTableContainer = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-      props.primaryColor}; /* color of the scrollbar thumb */
+      props.primarycolor}; /* color of the scrollbar thumb */
     border-radius: 10px; /* rounded corners of the scrollbar thumb */
   }
 
@@ -543,33 +543,33 @@ const SettingsTableContainer = styled.div`
 const SettingsTable = styled.table`
   width: auto;
   border-collapse: collapse;
-  border: 1px solid ${(props) => props.primaryColor};
+  border: 1px solid ${(props) => props.primarycolor};
 `;
 
 const StyledTableHeader = styled.th`
   text-align: center;
   font-weight: bold;
   padding: 0.5rem;
-  background-color: ${(props) => props.primaryColor};
-  border: 1px solid ${(props) => props.backgroundColor};
-  color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.primarycolor};
+  border: 1px solid ${(props) => props.backgroundcolor};
+  color: ${(props) => props.backgroundcolor};
   font-size: 1rem;
 `;
 
 const StyledTableCell = styled.td`
   padding: 0.5rem;
-  color: ${(props) => props.primaryColor};
-  border-bottom: 1px solid ${(props) => props.primaryColor};
-  border-right: 1px solid ${(props) => props.primaryColor};
+  color: ${(props) => props.primarycolor};
+  border-bottom: 1px solid ${(props) => props.primarycolor};
+  border-right: 1px solid ${(props) => props.primarycolor};
   &:last-child {
     border-right: none;
   }
 `;
 
 const StyledInput = styled.input`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.primaryColor};
-  border: 1px solid ${(props) => props.primaryColor};
+  background-color: ${(props) => props.backgroundcolor};
+  color: ${(props) => props.primarycolor};
+  border: 1px solid ${(props) => props.primarycolor};
   padding: 0.33rem;
   @media (max-width: 768px) {
     /* adjust the breakpoint as needed */
@@ -578,21 +578,21 @@ const StyledInput = styled.input`
 `;
 
 const StyledSelect = styled.select`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.primaryColor};
-  border: 1px solid ${(props) => props.primaryColor};
+  background-color: ${(props) => props.backgroundcolor};
+  color: ${(props) => props.primarycolor};
+  border: 1px solid ${(props) => props.primarycolor};
   padding: 0.33rem;
   width: 100%;
   outline-none;
 
   option:checked {
-    background-color: ${(props) => props.primaryColor}; 
-    color: ${(props) => props.backgroundColor}; 
+    background-color: ${(props) => props.primarycolor}; 
+    color: ${(props) => props.backgroundcolor}; 
   }
 
   option:hover {
     background-color: #fff; 
-    color: ${(props) => props.primaryColor}; 
+    color: ${(props) => props.primarycolor}; 
   }
     option {
   border-radius: 0px;
@@ -604,8 +604,8 @@ const StyledSelect = styled.select`
 
 const StyledButton = styled.button`
   background-color: transparent;
-  color: ${(props) => props.primaryColor};
-  border: solid 1px ${(props) => props.primaryColor};
+  color: ${(props) => props.primarycolor};
+  border: solid 1px ${(props) => props.primarycolor};
   padding: 0.5rem 1rem;
   border-radius: 0px;
   margin-right: 0.33rem;
@@ -635,12 +635,12 @@ const HeadingContainer = styled.div`
   align-items: center;
 
   & h1 {
-    color: ${(props) => props.primaryColor};
+    color: ${(props) => props.primarycolor};
   }
 
   & h3 {
     margin-bottom: 0.2rem;
-    color: ${(props) => props.primaryColor};
+    color: ${(props) => props.primarycolor};
   }
 `;
 
