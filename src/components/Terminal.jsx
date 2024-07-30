@@ -1,8 +1,7 @@
-import { useState,useContext } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Matrix from '../components/MatrixRain';
 import { UniversalContext } from '../context/UniversalContext';
-
 
 const Terminal = () => {
   const { getValue } = useContext(UniversalContext);
@@ -25,8 +24,10 @@ const Terminal = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      const currentTabCommands = tabs.find((tab) => tab.id === currentTab).commands;
-      const newCommands = [...currentTabCommands, `$ ${currentCommand}`]; // add $ sign to the command
+      const currentTabCommands = tabs.find(
+        (tab) => tab.id === currentTab
+      ).commands;
+      const newCommands = [...currentTabCommands, `$ ${currentCommand}`];
       setTabs(
         tabs.map((tab) => {
           if (tab.id === currentTab) {
@@ -36,20 +37,19 @@ const Terminal = () => {
         })
       );
 
-      // Clear the input field
-      setCurrentCommand('');
+      setCurrentCommand(''); 
     }
   };
 
   return (
     <TerminalContainer
-    style={{ color: getValue('primary'), borderColor:getValue('primary')}}
+      style={{ color: getValue('primary'), borderColor: getValue('primary') }}
     >
       <TabContainer>
         {tabs.map((tab) => (
           <Tab
-          primarycolor={getValue('primary')}
-          style={{borderColor:getValue('primary')}}
+            primarycolor={getValue('primary')}
+            style={{ borderColor: getValue('primary') }}
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
             isselected={tab.id === currentTab ? 'selected' : ''}
@@ -60,56 +60,61 @@ const Terminal = () => {
           </Tab>
         ))}
       </TabContainer>
-      <TabContent 
-      primarycolor={getValue('primary')}
-      style={{  overflowY: currentTab === 1 ? 'hidden' : 'auto', height: '100%' }}>
-  {currentTab === 1 ? (
-    <Matrix />
-  ) : (
-    <Output
-    primarycolor={getValue('primary')}
-    >
-      {tabs.find((tab) => tab.id === currentTab).commands.map((command, index) => (
-        <CommandLine key={index}>
-          <span>{command}</span>
-        </CommandLine>
-      ))}
-      <CommandLine>
-        {tabs.find((tab) => tab.id === currentTab).commands.length > 0 && (
-          <span>$</span>
-        )}
-        <Input
+      <ContentWrapper>
+        <TabContent
           primarycolor={getValue('primary')}
-          value={currentCommand}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder="$: "
-          rows={1} /* initial number of rows, will auto-grow */
-        />
-      </CommandLine>
-    </Output>
-  )}
-</TabContent>
+          style={{
+            overflowY: currentTab === 1 ? 'hidden' : 'auto',
+            height: '100%',
+          }}
+        >
+          {currentTab === 1 ? (
+            <Matrix />
+          ) : (
+            <Output primarycolor={getValue('primary')}>
+              {tabs
+                .find((tab) => tab.id === currentTab)
+                .commands.map((command, index) => (
+                  <CommandLine key={index}>
+                    <span>{command}</span>
+                  </CommandLine>
+                ))}
+              <CommandLine>
+                <InputWrapper>
+                  <DollarSign>$</DollarSign>
+                  <Input
+                    primarycolor={getValue('primary')}
+                    value={currentCommand}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder=" Enter your command" 
+                    rows={1} 
+                  />
+                </InputWrapper>
+              </CommandLine>
+            </Output>
+          )}
+        </TabContent>
+      </ContentWrapper>
     </TerminalContainer>
   );
 };
 
-//styles
+
 const TerminalContainer = styled.div`
+  display: flex;
+  flex-direction: column; 
+  overflow: hidden;
   font-family: 'Courier New', Courier, monospace;
-  border-radius: 0; 
+  border-left: 1px solid;
+  border-radius: 0;
   overflow-x: hidden;
-  overflow-y:none;
-  height:31rem;
+  overflow-y: none;
+  height: 31rem;
   width: 30rem;
-  border-left: 1px solid ;
-  border-bottom: 1px solid ;
   margin-bottom: 1rem;
-  scrollbar-width: none;
+  scrollbar-width: none; 
 
-
-
-  /* Responsive styles for different screen sizes */
   @media (max-width: 768px) {
     font-size: 12px;
     width: 25rem;
@@ -123,15 +128,41 @@ const TerminalContainer = styled.div`
 
 const TabContainer = styled.div`
   display: flex;
-  position: relative;
+  position: static;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 0px;
-  width: 100%;
-  left: -0.3rem;
-  padding-right:1rem;
-  overflow-y:none;
+  margin-left: -0.3rem;
+  padding-right: 1rem;
+  overflow-y: none;
+`;
+
+const ContentWrapper = styled.div`
+  flex-grow: 1;
+  overflow-y: auto; 
+  border-right: 1px solid ${(props) => props.primarycolor};
+  border-bottom: 1px solid;
+
   
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => props.primarycolor};
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 const Tab = styled.div`
@@ -159,30 +190,28 @@ const TabTextWrapper = styled.span`
 `;
 
 const TabContent = styled.div`
-overflow-y: auto;
+  overflow-y: auto;
   padding: 16px;
   height: 100%;
-  border-right: 1px solid ${(props)=>props.primarycolor};
-  /* Customize scrollbar design */
+
+ 
   &::-webkit-scrollbar {
-    
-    width: 8px; /* width of the scrollbar */
-    height: 8px; /* height of the scrollbar */
-    background-color: transparent; /* background color of the scrollbar */
+    width: 8px; 
+    height: 8px;
+    background-color: transparent; 
   }
 
   &::-webkit-scrollbar-thumb {
-    
-    background-color: ${(props)=>props.primarycolor}; /* color of the scrollbar thumb */
-    border-radius: 1px; /* rounded corners of the scrollbar thumb */
+    background-color: ${(props) => props.primarycolor}; 
+    border-radius: 1px; 
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa; /* hover color of the scrollbar thumb */
+    background-color: #aaa;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: transparent; /* background color of the scrollbar track */
+    background-color: transparent; 
   }
 `;
 
@@ -191,9 +220,22 @@ const CommandLine = styled.div`
   align-items: center;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center; 
+  width: 100%; 
+`;
+
+
+const DollarSign = styled.span`
+  color: ${(props) => props.primarycolor}; 
+  margin-right: 5px; 
+`;
+
+
 const Input = styled.textarea`
   background-color: transparent;
-  color: ${(props)=>props.primarycolor};
+  color: ${(props) => props.primarycolor};
   border: none;
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
@@ -201,16 +243,16 @@ const Input = styled.textarea`
   padding: 0;
   margin: 0;
   outline: none;
-  resize:none;
-  scrollbar-width: none;
+  resize: none;
+  scrollbar-width: none; 
 
-   &::placeholder {
+  &::placeholder {
     color: ${(props) => props.primarycolor};
   }
 `;
 
 const Output = styled.div`
-  color: ${(props)=>props.primarycolor};
+  color: ${(props) => props.primarycolor};
   white-space: normal;
   word-break: break-word;
   overflow-wrap: break-word;
