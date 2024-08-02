@@ -45,15 +45,13 @@ const ColumnContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom:solid 1px;
-  gap: 0.625rem;
 `;
 
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  width: 20rem;
   justify-content: center;
   font-family: monospace;
   font-size: 0.75rem;

@@ -32,7 +32,7 @@ const ColumnContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 0.625rem;
-  width: 100%;
+  width: 20rem;
   padding-bottom: 0.625rem;
   border-bottom: 1px solid ;
 `;

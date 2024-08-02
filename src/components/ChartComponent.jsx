@@ -148,7 +148,7 @@ const ChartComponent = ({ topic = "BTC/ETH", subTopic = "Prepatual" }) => {
   }, [getValue]);
 
   return (
-    <div style={{ width: "100%", height: "fit-content", position: "relative" }}>
+    <div style={{ width: "20rem", height: "fit-content", position: "relative" }}>
       <div
         style={{
           position: "absolute",

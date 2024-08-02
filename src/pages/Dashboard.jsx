@@ -178,7 +178,7 @@ const StyledCol1 = styled(Col)`
 `;
 
 const StyledCol2 = styled(Col)`
-  margin: 0.5rem;
+  margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

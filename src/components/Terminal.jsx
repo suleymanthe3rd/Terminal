@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Matrix from '../components/MatrixRain';
 import { UniversalContext } from '../context/UniversalContext';
@@ -6,40 +6,74 @@ import { UniversalContext } from '../context/UniversalContext';
 const Terminal = () => {
   const { getValue } = useContext(UniversalContext);
   const [tabs, setTabs] = useState([
-    { id: 1, title: 'Tab 1', commands: [] },
-    { id: 2, title: 'Tab 2', commands: [] },
-    { id: 3, title: 'Tab 3', commands: [] },
-    { id: 4, title: 'Tab 4', commands: [] },
+    { id: 1, title: 'Tab 1', commands: [], currentCommand: '' },
+    { id: 2, title: 'Tab 2', commands: [], currentCommand: '' },
+    { id: 3, title: 'Tab 3', commands: [], currentCommand: '' },
+    { id: 4, title: 'Tab 4', commands: [], currentCommand: '' },
   ]);
   const [currentTab, setCurrentTab] = useState(1);
-  const [currentCommand, setCurrentCommand] = useState('');
+  const inputRef = useRef(null);
 
   const handleTabChange = (tabId) => {
     setCurrentTab(tabId);
   };
 
   const handleInputChange = (event) => {
-    setCurrentCommand(event.target.value);
+    const updatedTabs = tabs.map((tab) =>
+      tab.id === currentTab
+        ? { ...tab, currentCommand: event.target.value }
+        : tab
+    );
+    setTabs(updatedTabs);
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      const currentTabCommands = tabs.find(
-        (tab) => tab.id === currentTab
-      ).commands;
-      const newCommands = [...currentTabCommands, `$ ${currentCommand}`];
-      setTabs(
-        tabs.map((tab) => {
-          if (tab.id === currentTab) {
-            return { ...tab, commands: newCommands };
-          }
-          return tab;
-        })
+      const updatedTabs = tabs.map((tab) =>
+        tab.id === currentTab
+          ? {
+              ...tab,
+              commands: [...tab.commands, `$ ${tab.currentCommand}`],
+              currentCommand: '',
+            }
+          : tab
       );
-
-      setCurrentCommand(''); 
+      setTabs(updatedTabs);
     }
   };
+
+  // UseEffect to update input value from context
+  useEffect(() => {
+    const handleKeyPressed = () => {
+      if (inputRef.current) {
+        const pressedKey = getValue('keypressed');
+        const specialKeys = ['SHIFT', 'ESC', 'TAB', 'ENTER', 'CAPS', 'CTRL', 'FN', 'SPACE', 'ALT GR'];
+        if (!specialKeys.includes(pressedKey)) {
+          setTabs(
+            tabs.map((tab) =>
+              tab.id === currentTab
+                ? { ...tab, currentCommand: tab.currentCommand + pressedKey }
+                : tab
+            )
+          );
+        } else {
+          if (pressedKey === 'ENTER') {
+            handleKeyDown({ key: 'Enter' });
+          } else if (pressedKey === 'SPACE') {
+            setTabs(
+              tabs.map((tab) =>
+                tab.id === currentTab
+                  ? { ...tab, currentCommand: tab.currentCommand + ' ' }
+                  : tab
+              )
+            );
+          }
+        }
+      }
+    };
+  
+    handleKeyPressed();
+  }, [getValue]);
 
   return (
     <TerminalContainer
@@ -84,11 +118,12 @@ const Terminal = () => {
                   <DollarSign>$</DollarSign>
                   <Input
                     primarycolor={getValue('primary')}
-                    value={currentCommand}
+                    value={tabs.find((tab) => tab.id === currentTab).currentCommand} // Access currentCommand from the correct tab
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    placeholder=" Enter your command" 
-                    rows={1} 
+                    placeholder=" Enter your command"
+                    rows={1}
+                    ref={inputRef} // Add ref to the input
                   />
                 </InputWrapper>
               </CommandLine>
@@ -103,7 +138,7 @@ const Terminal = () => {
 
 const TerminalContainer = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   overflow: hidden;
   font-family: 'Courier New', Courier, monospace;
   border-left: 1px solid;
@@ -113,7 +148,7 @@ const TerminalContainer = styled.div`
   height: 31rem;
   width: 30rem;
   margin-bottom: 1rem;
-  scrollbar-width: none; 
+  scrollbar-width: none;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -140,11 +175,10 @@ const TabContainer = styled.div`
 
 const ContentWrapper = styled.div`
   flex-grow: 1;
-  overflow-y: auto; 
+  overflow-y: auto;
   border-right: 1px solid ${(props) => props.primarycolor};
   border-bottom: 1px solid;
 
-  
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -191,19 +225,17 @@ const TabTextWrapper = styled.span`
 
 const TabContent = styled.div`
   overflow-y: auto;
-  padding: 16px;
   height: 100%;
 
- 
   &::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
     height: 8px;
-    background-color: transparent; 
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.primarycolor}; 
-    border-radius: 1px; 
+    background-color: ${(props) => props.primarycolor};
+    border-radius: 1px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
@@ -211,27 +243,29 @@ const TabContent = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background-color: transparent; 
+    background-color: transparent;
   }
 `;
 
 const CommandLine = styled.div`
   display: flex;
   align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom:5px;
+  padding-top:5px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
-  align-items: center; 
-  width: 100%; 
+  align-items: center;
+  width: 100%;
 `;
-
 
 const DollarSign = styled.span`
-  color: ${(props) => props.primarycolor}; 
-  margin-right: 5px; 
+  color: ${(props) => props.primarycolor};
+  margin-right: 5px;
 `;
-
 
 const Input = styled.textarea`
   background-color: transparent;
@@ -244,7 +278,7 @@ const Input = styled.textarea`
   margin: 0;
   outline: none;
   resize: none;
-  scrollbar-width: none; 
+  scrollbar-width: none;
 
   &::placeholder {
     color: ${(props) => props.primarycolor};

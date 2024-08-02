@@ -48,7 +48,7 @@ const ClipboardAccessContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 20rem;
   max-width: 100%;
   box-sizing: border-box;
 `;

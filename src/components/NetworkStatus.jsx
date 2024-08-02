@@ -2,23 +2,26 @@ import styled from 'styled-components';
 import { UniversalContext } from '../context/UniversalContext';
 import { useContext } from 'react';
 
-
 const NetworkStatus = () => {
   const { getValue } = useContext(UniversalContext);
   return (
     <ColumnContainer
-    style={{
-      borderColor:getValue('primary'),
-     }}
+      style={{
+        borderColor: getValue('primary'),
+      }}
     >
       <Topic
-       style={{ color: getValue('primary'),
-        borderColor:getValue('primary'),
-       }}
-      >NETWORK STATUS</Topic>
+        style={{
+          color: getValue('primary'),
+          borderColor: getValue('primary'),
+        }}
+      >
+        NETWORK STATUS
+      </Topic>
       <NetworkStatusContainer
-       style={{ color: getValue('primary'),
-       }}
+        style={{
+          color: getValue('primary'),
+        }}
       >
         <NetworkStatusItem>
           <span>STATE</span> <BoldText>ONLINE</BoldText>
@@ -34,27 +37,23 @@ const NetworkStatus = () => {
   );
 };
 
-//styles related
+// styles related
 
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: enter;
-  gap: 0.625rem;
-  width: 100%;
+  justify-content: center;
+  width: 20rem;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  border-top: 1px solid ;
-  border-bottom: 1px solid ;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 `;
 
 const NetworkStatusContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
   width: 100%;
-  justify-content: center;
   font-family: monospace;
   font-size: 0.75rem;
   position: relative;
@@ -64,8 +63,7 @@ const NetworkStatusItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
+  flex:1;
 `;
 
 const BoldText = styled.span`
@@ -78,12 +76,10 @@ const Topic = styled.span`
   font-size: 0.85rem;
   width: 100%;
   text-align: left;
-  
+
   @media (max-width: 768px) {
     text-align: center;
   }
 `;
-
-
 
 export default NetworkStatus;

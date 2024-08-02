@@ -47,7 +47,7 @@ const MemoryStatus = () => {
         <Usage
         style={{ color: getValue('primary'),
          }}
-        >using 1.5 GB of 7.5 GB</Usage>
+        >1.5 GB of 7.5 GB</Usage>
       </TopicRow>
       <GridContainer>
         {grid.map((row, rowIndex) => (
@@ -67,11 +67,12 @@ const MemoryStatus = () => {
 //styles
 const Container = styled.div`
   display: flex;
+  border-top:solid 1px;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
   font-family: monospace;
-  width: 100%;
+  width: 18rem;
 `;
 
 const Topic = styled.span`

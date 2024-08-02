@@ -69,7 +69,7 @@ const Container = styled.div`
   font-family: monospace;
   border-top: 1px solid;
   border-bottom: 1px solid ;
-  width: 100%;
+  width: 20rem;
 `;
 
 const Table = styled.table`

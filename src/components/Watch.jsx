@@ -42,7 +42,7 @@ const WatchContainer = styled.div`
   font-weight: bold;
   border-top: 1px solid ${(props)=>props.primarycolor};
   border-bottom: 1px solid ${(props)=>props.primarycolor};
-  width: 100%;
+  width: 20rem;
 `;
 
 export default Watch;
