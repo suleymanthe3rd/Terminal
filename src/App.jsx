@@ -4,13 +4,16 @@ import Logo from "./components/Logo";
 import BootAnimation from "./components/BootAnimation";
 import { UniversalProvider, UniversalContext } from './context/UniversalContext';
 import getThemesData from './utils/themeReader';
+import overrideConsoleWarn from './hooks/overrideConsoleWarn'
 
 function App() {
   const [appState, setAppState] = useState('loading'); // Initial app state
-  const { setValue } = useContext(UniversalContext);
+  const { setValue, getValue } = useContext(UniversalContext);
+  overrideConsoleWarn();
+  
   const setTheme = (themeData) => {
     if(localStorage.getItem('selectedTheme')){
-      const theme =localStorage.getItem('selectedTheme');
+      const theme = localStorage.getItem('selectedTheme');
       setValue('selectedTheme', theme);
       setValue('primary', themeData[theme]['primarycolor']);
       setValue('secondary', themeData[theme]['secondaryColor']);
@@ -30,19 +33,33 @@ function App() {
     setValue('settingsVisible', 'false');
     setValue('dialogVisible', 'false');
     setAppState('bootAnimation');
-    setTimeout(() => setAppState('logo'), 3000);
-    setTimeout(() => setAppState('dashboard'), 7000);
   };
- 
-  
+
   useEffect(() => {
     initializeApp();
   }, []);
 
+  useEffect(() => {
+    if (getValue('turn on') === true) {
+      const timeoutId = setTimeout(() => {
+        setAppState('logo');
+      }, 5000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [getValue('turn on')]);
+
+  useEffect(() => {
+    if (appState === 'logo') {
+      const timeoutId = setTimeout(() => {
+        setAppState('dashboard');
+      }, 4000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [appState]);
 
   return (
     <>
-       {appState === 'bootAnimation' && <BootAnimation />}
+      {appState === 'bootAnimation' && <BootAnimation />}
       {appState === 'logo' && <Logo />}
       {appState === 'dashboard' && <Dashboard />}
     </>

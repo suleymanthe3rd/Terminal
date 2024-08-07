@@ -73,7 +73,7 @@ const Terminal = () => {
     };
   
     handleKeyPressed();
-  }, [getValue]);
+  }, [getValue('keypressed')]);
 
   return (
     <TerminalContainer
