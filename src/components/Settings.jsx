@@ -154,8 +154,13 @@ const Settings = () => {
 
   return (
     isVisible && (
-      <ModelContainer>
         <SettingsContainer
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
           backgroundcolor={getValue("background")}
           primarycolor={getValue("primary")}
         >
@@ -481,31 +486,20 @@ const Settings = () => {
             <Button onClick={closeOnClick}>Close</Button>
           </ButtonContainer>
         </SettingsContainer>
-      </ModelContainer>
+
     )
   );
 };
 
 //styles
-const ModelContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-`;
+
 const SettingsContainer = styled.div`
   position: relative;
   background-color: ${(props) => props.backgroundcolor};
   font-family: monospace;
   padding: 1.25rem;
   border: 1px solid ${(props) => props.primarycolor};
-  max-width: 50%;
+  width: 50%;
   height: 80vh;
 
   @media (max-width: 768px) {

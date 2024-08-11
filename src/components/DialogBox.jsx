@@ -1,12 +1,11 @@
-
-import { useState,useContext,useEffect  } from 'react';
+/* eslint-disable no-unused-vars */
+import { useState, useContext, useEffect } from 'react';
 import { UniversalContext } from '../context/UniversalContext';
 import styled from 'styled-components';
 
 const DialogBox = () => {
-  const { getValue,setValue } = useContext(UniversalContext);
+  const { getValue, setValue } = useContext(UniversalContext);
   const [isOpen, setIsOpen] = useState(getValue("dialogVisible") === "true" ? true : false);
-  
 
   useEffect(() => {
     setIsOpen(getValue("dialogVisible") === "true" ? true : false);
@@ -26,73 +25,65 @@ const DialogBox = () => {
   return (
     <div>
       {isOpen && (
-        <ModalContainer>
-          <DialogBoxContainer primarycolor={getValue('primary')} backgroundcolor={getValue('background')} >
-            <DialogBoxHeader
+        <DialogBoxContainer primarycolor={getValue('primary')} backgroundcolor={getValue('background')} 
+                            style={{
+                              position: 'fixed',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              zIndex: 2,
+                            }}
+        >
+          <DialogBoxHeader
             style={{ color: getValue('primary') }}
-            >
-              <h2>Dialog Box Title</h2>
-            </DialogBoxHeader>
-            <DialogBoxBody
+          >
+            <h2>Dialog Box Title</h2>
+          </DialogBoxHeader>
+          <DialogBoxBody
             style={{ color: getValue('primary') }}
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-                amet nulla auctor, vestibulum magna sed, convallis ex.
-              </p>
-            </DialogBoxBody>
-            <DialogBoxFooter>
-              <Button 
+          >
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
+              amet nulla auctor, vestibulum magna sed, convallis ex.
+            </p>
+          </DialogBoxBody>
+          <DialogBoxFooter>
+            <Button 
               style={{ color: getValue('primary'),
                   borderColor:getValue('primary'),
                }}
-              onClick={handleCloseModal}>Cancel</Button>
-              <Button
+            onClick={handleCloseModal}>Cancel</Button>
+            <Button
               style={{ color: getValue('primary'),
                   borderColor:getValue('primary'),
                }}
-              >OK</Button>
-            </DialogBoxFooter>
-          </DialogBoxContainer>
-        </ModalContainer>
+            >OK</Button>
+          </DialogBoxFooter>
+        </DialogBoxContainer>
       )}
     </div>
   );
 };
 
 //styles
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index:2;
-`;
-
 const DialogBoxContainer = styled.div`
-  position: relative;
   padding: 0.4rem;
   width: 60%;
   margin: 2rem;
-  isolation: isolate;
   clip-path: polygon(0 0, 88% 0, 100% 24%, 100% 100%, 10% 100%, 0 78%);
   display: flex;
   flex-direction: column; 
   align-items: center; 
   justify-content: center; 
   text-align: center; 
+  z-index: 10;
   background-color:${props=>props.primarycolor};
   &::before {
     content: "";
     background-color: ${props=>props.backgroundcolor};
     inset: 2px;
     position: absolute;
-    z-index: -1;
+    z-index: -11;
     clip-path: polygon(0 0, 88% 0, 100% 24%, 100% 100%, 10% 100%, 0 78%);
   }
 `;
