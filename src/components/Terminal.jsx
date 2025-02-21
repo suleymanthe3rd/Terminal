@@ -6,10 +6,10 @@ import { UniversalContext } from '../context/UniversalContext';
 const Terminal = () => {
   const { getValue } = useContext(UniversalContext);
   const [tabs, setTabs] = useState([
-    { id: 1, title: 'Tab 1', commands: [], currentCommand: '' },
-    { id: 2, title: 'Tab 2', commands: [], currentCommand: '' },
-    { id: 3, title: 'Tab 3', commands: [], currentCommand: '' },
-    { id: 4, title: 'Tab 4', commands: [], currentCommand: '' },
+    { id: 1, agentId: "just-matrix", title: 'Matrix', commands: [], answers: [], currentCommand: '' },
+    { id: 2, agentId: "2692c197-e4be-07be-ba6f-1680ed56bbab", title: 'BlackPast', commands: [], answers: [], currentCommand: '' },
+    { id: 3, agentId: "432er433-e4be-07be-ba6f-4324ffswrtf3", title: '0asis', commands: [], answers: [], currentCommand: '' },
+    { id: 4, agentId: "5dgg4sww-e4be-07be-ba6f-g543wet43tg4", title: 'PuppetMaster', commands: [], answers: [], currentCommand: '' },
   ]);
   const [currentTab, setCurrentTab] = useState(1);
   const inputRef = useRef(null);
@@ -27,18 +27,71 @@ const Terminal = () => {
     setTabs(updatedTabs);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      const updatedTabs = tabs.map((tab) =>
-        tab.id === currentTab
-          ? {
-              ...tab,
-              commands: [...tab.commands, `$ ${tab.currentCommand}`],
-              currentCommand: '',
-            }
-          : tab
-      );
-      setTabs(updatedTabs);
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      const inputValue = event.target.value.trim();
+
+      if (inputValue !== "") {
+        console.log("Enter key detected! Sending request...");
+        console.log(event.target.value != "\n");
+        console.log(event.target.value == "");
+        console.log(event.target.value == '');
+
+        const currentTabData = tabs.find(tab => tab.id === currentTab);
+
+        setTabs((prevTabs) =>
+          prevTabs.map((tab) =>
+            tab.id === currentTab
+              ? {
+                  ...tab,
+                  commands: [...tab.commands, `$ ${tab.currentCommand}`],
+                  answers: [...tab.answers, `  > Loading...`],
+                  currentCommand: "",
+                }
+              : tab
+          )
+        );
+        try {
+          const response = await fetch(`http://localhost:3000/${currentTabData.agentId}/message`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              text: event.target.value,
+              userId: "user",
+              userName: "User",
+            }),
+          });
+    
+          const responseData = await response.json();
+    
+          setTabs((prevTabs) =>
+            prevTabs.map((tab) =>
+              tab.id === currentTab
+                ? {
+                    ...tab,
+                    answers: tab.answers.map((answer, index) =>
+                      index === tab.answers.length - 1 ? `  > ${responseData[0].text}` : answer
+                    ),
+                  }
+                : tab
+            )
+          );
+        } catch (error) {
+          console.error("Error sending request:", error);
+          setTabs((prevTabs) =>
+            prevTabs.map((tab) =>
+              tab.id === currentTab
+                ? {
+                    ...tab,
+                    answers: tab.answers.map((answer, index) =>
+                      index === tab.answers.length - 1 ? "  > Error fetching response" : answer
+                    ),
+                  }
+                : tab
+            )
+          );
+        }
+      }
     }
   };
 
@@ -109,9 +162,14 @@ const Terminal = () => {
               {tabs
                 .find((tab) => tab.id === currentTab)
                 .commands.map((command, index) => (
-                  <CommandLine key={index}>
-                    <span>{command}</span>
-                  </CommandLine>
+                  <>
+                    <CommandLine key={index}>
+                      <span>{command}</span>
+                    </CommandLine>
+                    <span style={{ color: tabs.find((tab) => tab.id === currentTab)?.answers[index] === "> Loading..." ? "yellow" : "white" }}>
+                      {tabs.find((tab) => tab.id === currentTab)?.answers[index]}
+                    </span>             
+                  </>
                 ))}
               <CommandLine>
                 <InputWrapper>
